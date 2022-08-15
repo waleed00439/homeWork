@@ -1,0 +1,53 @@
+create database store;
+
+create table countries(code int primary key ,
+ name varchar(20)unique ,
+ continent_name varchar(20)not null);
+
+create table users(
+    id int primary key ,
+    full_name varchar(20),
+    email varchar(20)unique ,
+    gender char(1)check ( gender='m'or gender='f'),
+    created_at datetime ,
+    continent_code int,
+    foreign key (continent_code) references countries(code)
+);
+create table orders(
+    id int primary key ,
+    user_id int,
+    status char(6)check ( status='start' or status='finish'), created_at
+    datetime, foreign key (user_id)references users(id));
+
+
+
+create table products(
+    id int primary key , name varchar(10)not null,
+    price int default 0,status varchar(10)check ( status='valid'or status='expired'),
+created_at datetime);
+
+
+create table order_products(oder_id int,product_id int,
+quantity int default 0, foreign key (oder_id)references
+       orders(id), foreign key (product_id)references products(id));
+
+
+insert into countries values (10,'Ryiadh','Ryiadh');
+
+insert into countries values (9,'jeddah','Makkah');
+
+insert into users values (1,'Waleed','waleed@hotmail.com', 'f'
+    '30/10/2001', '2022-08-16','10');
+
+insert into users values (2,'fasil','fasil@hotmail.com', 'f',
+      '15/9/1998', '2022-08-15','10');
+
+insert into  orders values ('2','1','start','2022-8-16');
+
+insert into products values ('40', 'phone', '2000', 'valid', '2020-08-08 ');
+
+insert into order_products values ('2', '40', '3');
+
+update countries set name = 'jeddah'WHERE code = 9;
+
+delete from products where id=40;
